@@ -4,6 +4,7 @@ import akka.actor.ActorRef
 import akka.actor.ActorSystem
 import akka.pattern.Patterns.ask
 import com.victormonte.balance.domain.command.CreditCommand
+import com.victormonte.balance.domain.command.DebitCommand
 import com.victormonte.balance.domain.command.GetBalanceActorCommand
 import com.victormonte.balance.domain.command.GetBalanceCommand
 import com.victormonte.balance.domain.state.BalanceState
@@ -40,6 +41,11 @@ class BalanceService(system: ActorSystem) {
         ask(actorRef, command, 3000)
     }
 
+    fun debit(command: DebitCommand) {
+        val actorRef = getBalanceActor(command.customerId)
+        ask(actorRef, command, 3000)
+    }
+
     private fun toMono(future: Future<Any>?): Mono<BalanceState> {
 
         val completableFuture = toJava(future)
@@ -57,4 +63,5 @@ class BalanceService(system: ActorSystem) {
 
         return toJava(result).toCompletableFuture().get() as ActorRef
     }
+
 }

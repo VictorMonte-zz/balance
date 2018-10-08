@@ -2,6 +2,7 @@ package com.victormonte.balance.presentation.controller
 
 import com.victormonte.balance.application.service.BalanceService
 import com.victormonte.balance.domain.command.CreditCommand
+import com.victormonte.balance.domain.command.DebitCommand
 import com.victormonte.balance.domain.state.BalanceState
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -24,6 +25,12 @@ class BalanceController{
     @PostMapping("/balance/credit")
     fun credit(@RequestBody command: CreditCommand): ResponseEntity<Void> {
         balanceService.credit(command)
+        return ResponseEntity(HttpStatus.OK)
+    }
+
+    @PostMapping("/balance/debit")
+    fun credit(@RequestBody command: DebitCommand): ResponseEntity<Void> {
+        balanceService.debit(command)
         return ResponseEntity(HttpStatus.OK)
     }
 
