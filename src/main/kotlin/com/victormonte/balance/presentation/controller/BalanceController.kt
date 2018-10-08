@@ -11,24 +11,25 @@ import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 
 @RestController
+@RequestMapping("balance")
 class BalanceController{
 
     @Autowired
     private lateinit var balanceService: BalanceService
 
-    @GetMapping("/customer/{id}/balance")
-    fun get(@PathVariable id: Int) : ResponseEntity<Mono<BalanceState>>{
-        val result = balanceService.get(id)
+    @GetMapping
+    fun get(@RequestHeader customerId: Int) : ResponseEntity<Mono<BalanceState>>{
+        val result = balanceService.get(customerId)
         return ResponseEntity(result, HttpStatus.OK)
     }
 
-    @PostMapping("/balance/credit")
+    @PostMapping("/credit")
     fun credit(@RequestBody command: CreditCommand): ResponseEntity<Void> {
         balanceService.credit(command)
         return ResponseEntity(HttpStatus.OK)
     }
 
-    @PostMapping("/balance/debit")
+    @PostMapping("/debit")
     fun credit(@RequestBody command: DebitCommand): ResponseEntity<Void> {
         balanceService.debit(command)
         return ResponseEntity(HttpStatus.OK)
