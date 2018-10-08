@@ -1,4 +1,4 @@
-package com.victormonte.balance.balance
+package com.victormonte.balance
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
