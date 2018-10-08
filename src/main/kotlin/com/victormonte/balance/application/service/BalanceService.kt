@@ -38,12 +38,12 @@ class BalanceService(system: ActorSystem) {
 
     fun credit(command: CreditCommand) {
         val actorRef = getBalanceActor(command.customerId)
-        ask(actorRef, command, 3000)
+        actorRef.tell(command, supervisor)
     }
 
     fun debit(command: DebitCommand) {
         val actorRef = getBalanceActor(command.customerId)
-        ask(actorRef, command, 3000)
+        actorRef.tell(command, supervisor)
     }
 
     private fun toMono(future: Future<Any>?): Mono<BalanceState> {
