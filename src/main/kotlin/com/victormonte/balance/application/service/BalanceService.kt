@@ -3,8 +3,8 @@ package com.victormonte.balance.application.service
 import akka.actor.ActorRef
 import akka.actor.ActorSystem
 import akka.pattern.Patterns.ask
-import com.victormonte.balance.domain.command.CreditCommand
-import com.victormonte.balance.domain.command.DebitCommand
+import com.victormonte.balance.domain.command.CreditBalanceCommand
+import com.victormonte.balance.domain.command.DebitBalanceCommand
 import com.victormonte.balance.domain.command.GetBalanceActorCommand
 import com.victormonte.balance.domain.command.GetBalanceCommand
 import com.victormonte.balance.domain.state.BalanceState
@@ -36,12 +36,12 @@ class BalanceService(system: ActorSystem) {
         return toMono(result)
     }
 
-    fun credit(command: CreditCommand) {
-        val actorRef = getBalanceActor(command.customerId)
-        actorRef.tell(command, supervisor)
+    fun credit(balanceCommand: CreditBalanceCommand) {
+        val actorRef = getBalanceActor(balanceCommand.customerId)
+        actorRef.tell(balanceCommand, supervisor)
     }
 
-    fun debit(command: DebitCommand) {
+    fun debit(command: DebitBalanceCommand) {
         val actorRef = getBalanceActor(command.customerId)
         actorRef.tell(command, supervisor)
     }
